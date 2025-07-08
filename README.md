@@ -68,12 +68,14 @@ After observing failed connection requests from a suspected host (`10.0.0.132`) 
 ![Screenshot 2025-01-06 110119](https://github.com/user-attachments/assets/f0d1b30e-9076-4ead-b6ad-3e22a228683c)
 
 ## **🌐Network Check**
-**Observed Behavior** I pivoted to the `DeviceProcessEvents` table to see if we could see anything that was suspicious around the time the port scan started. We noticed a PowerShell script named `portscan.ps1` launched at `2025-01-06T06:37:00.774381Z`.
+**Observed Behavior** 
+
+Pivoted to the `DeviceProcessEvents` table to see if we could see anything that was suspicious around the time the port scan started. A PowerShell script named `portscan.ps1` launched at `2025-07-08T04:37:50.0190994Z`.
 
    **Detection Query (KQL):**
 ```kql
-let VMName = "windows-target-1";
-let specificTime = datetime(2025-01-06T06:37:00.774381Z);
+let VMName = "nessa-windows";
+let specificTime = datetime(2025-07-08T04:39:53.7597903Z);
 DeviceProcessEvents
 | where Timestamp between ((specificTime - 10m) .. (specificTime + 10m))
 | where DeviceName == VMName
