@@ -4,7 +4,7 @@
 
 # Incident Investigation Report
 
-## 📚 **Scenario:**
+## 📚 **Scenario**
 During routine monitoring, the server team reported significant performance degradation affecting legacy systems in the `10.0.0.0/16` network. While external DDoS attacks were ruled out, internal traffic remained unrestricted. 
 
 Observation: The `nessa-windows` device exhibited abnormal network behavior. Network traffic originating from internal hosts is unrestricted. There is also unrestricted use of PowerShell in the environment. 
@@ -37,9 +37,9 @@ DeviceProcessEvents
 | take 10
 ```
 
-### **Timeline Overview**
+## 🔍 **Timeline Overview**
 
-**🔍 The device `nessa-windows` is experiencing repeated connection failures to internal, external, and localhost IPs—suggesting possible network misconfiguration, blocked traffic, or abnormal behavior such as automated or malicious connection attempts. This may also indicate internal network issues or failed large-scale data exfiltration attempts to external destinations.**
+**The device `nessa-windows` is experiencing repeated connection failures to internal, external, and localhost IPs—suggesting possible network misconfiguration, blocked traffic, or abnormal behavior such as automated or malicious connection attempts. This may also indicate internal network issues or failed large-scale data exfiltration attempts to external destinations.**
 
    **Detection Query (KQL):**
    ```kql
@@ -51,23 +51,22 @@ DeviceProcessEvents
    ```
 ![Screenshot 2025-01-06 104150](https://github.com/user-attachments/assets/5ae46fee-237d-4363-8fa4-1b17cdf525d9)
 
-**⚙️ Process Analysis:**
-   - **Observed Behavior:** After observing failed connection requests from a suspected host (`10.0.0.5`) in chronological order, I noticed a port scan was taking place due to the sequential order of the ports. There were several port scans being conducted.
+## ⚙️**Process Analysis**
+
+**Observed Behavior:** After observing failed connection requests from a suspected host (`10.0.0.132`) in chronological order, I noticed a port scan was taking place due to the sequential order of the ports. There were several port scans being conducted.
 
    **Detection Query (KQL):**
    ```kql
-   let IPInQuestion = "10.0.0.5";
+   let IPInQuestion = "10.0.0.132";
    DeviceNetworkEvents
    | where ActionType == "ConnectionFailed"
    | where LocalIP == IPInQuestion
    | order by Timestamp desc
    ```
-![Screenshot 2025-01-06 110119](https://github.com/user-attachments/assets/0a413b76-a739-4779-ac8a-aa3cd4a8ff9e)
+![Screenshot 2025-01-06 110119](https://github.com/user-attachments/assets/f0d1b30e-9076-4ead-b6ad-3e22a228683c)
 
-   
-
-**🌐 Network Check:**
-   - **Observed Behavior:** I pivoted to the `DeviceProcessEvents` table to see if we could see anything that was suspicious around the time the port scan started. We noticed a PowerShell script named `portscan.ps1` launched at `2025-01-06T06:37:00.774381Z`.
+## **🌐Network Check**
+**Observed Behavior** I pivoted to the `DeviceProcessEvents` table to see if we could see anything that was suspicious around the time the port scan started. We noticed a PowerShell script named `portscan.ps1` launched at `2025-01-06T06:37:00.774381Z`.
 
    **Detection Query (KQL):**
 ```kql
@@ -81,7 +80,7 @@ DeviceProcessEvents
 ```
 ![Screenshot 2025-01-13 161326](https://github.com/user-attachments/assets/ad26dcfb-2c43-4674-8a14-f926415d9ee6)
 
-**📝 Response:**
+## **📝Response**
    - We observed the port scan script was launched by the SYSTEM account. This is not expected behavior and it is not something that was setup by the admins. I isolated the device and ran a malware scan. The malware scan produced no results, so out of caution, I kept the device isolated and put in a ticket to have it re-image/rebuilt. Shared findings with the manager, highlighting automated archive creation. Awaiting further instructions.
  
 
