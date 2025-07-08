@@ -10,6 +10,7 @@ During routine monitoring, the server team reported significant performance degr
 Observation: The `r3dant-ls-lab6` device exhibited abnormal network behavior. Network traffic originating from internal hosts is unrestricted. There is also unrestricted use of PowerShell in the environment. 
 
 Hypothesis: The security team suspected unauthorized scanning or data movement inside the network. 
+
 ---
 
 ## 📊 **Incident Summary and Findings**
