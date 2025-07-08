@@ -90,6 +90,8 @@ The port scan script was launched by the SYSTEM account. This is not expected be
 
 ![Screenshot 2025-01-06 112548](https://github.com/user-attachments/assets/545363b9-cf69-4609-b40a-1af34c18c86e)
 
+![Screenshot 2025-01-06 112548](https://github.com/user-attachments/assets/7690a166-07c0-41b1-adf7-f2940c9a0c1e)
+
 ---
 
 # MITRE ATT&CK Techniques for Incident Notes
