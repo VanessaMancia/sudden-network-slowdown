@@ -127,4 +127,4 @@ DeviceProcessEvents
 ## Revision History:
 | **Version** | **Changes**                   | **Date**         | **Modified By**   |
 |-------------|-------------------------------|------------------|-------------------|
-| 1.0         | Initial draft                  | `Jan 2025`  | `Trevino Parker`   
+| 1.0         | Initial draft                  | `July 2025`  | `Vanessa Mancia`   
