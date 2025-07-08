@@ -15,10 +15,9 @@ Hypothesis: The security team suspected unauthorized scanning or data movement i
 
 ## 📊 **Incident Summary and Findings**
 
-Goal: Gather relevant data from logs, network traffic, and endpoints. Consider inspecting the logs for excessive successful / failed connections from any devices. If discovered, pivot and inspect those devices for any suspicious file or process events.
+**Objective:** Analyze logs, network data, and endpoints to identify signs of unauthorized scanning or data movement. Focus on identifying devices with excessive failed/successful connection attempts and suspicious file or process activity.
 
-Activity: Ensure data is available from all key sources for analysis.
-
+**Relevant Data Sources:**
 - `DeviceNetworkEvents`
 - `DeviceFileEvents`
 - `DeviceProcessEvents`
