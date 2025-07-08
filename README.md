@@ -7,7 +7,7 @@
 ## 📚 **Scenario:**
 During routine monitoring, the server team reported significant performance degradation affecting legacy systems in the `10.0.0.0/16` network. While external DDoS attacks were ruled out, internal traffic remained unrestricted. 
 
-Observation: The `r3dant-ls-lab6` device exhibited abnormal network behavior. Network traffic originating from internal hosts is unrestricted. There is also unrestricted use of PowerShell in the environment. 
+Observation: The `nessa-windows` device exhibited abnormal network behavior. Network traffic originating from internal hosts is unrestricted. There is also unrestricted use of PowerShell in the environment. 
 
 Hypothesis: The security team suspected unauthorized scanning or data movement inside the network. 
 
@@ -15,8 +15,7 @@ Hypothesis: The security team suspected unauthorized scanning or data movement i
 
 ## 📊 **Incident Summary and Findings**
 
-Goal: Gather relevant data from logs, network traffic, and endpoints.
-Consider inspecting the logs for excessive successful / failed connections from any devices.  If discovered, pivot and inspect those devices for any suspicious file or process events.
+Goal: Gather relevant data from logs, network traffic, and endpoints. Consider inspecting the logs for excessive successful / failed connections from any devices. If discovered, pivot and inspect those devices for any suspicious file or process events.
 
 Activity: Ensure data is available from all key sources for analysis.
 
@@ -39,20 +38,20 @@ DeviceProcessEvents
 ```
 
 ### **Timeline Overview**
-1. **🔍 Windows-target-1 was found failing several connection requests against itself and another host on the same network.**
+
+**🔍 The device `nessa-windows` is experiencing repeated connection failures to internal, external, and localhost IPs—suggesting possible network misconfiguration, blocked traffic, or abnormal behavior such as automated or malicious connection attempts. This may also indicate internal network issues or failed large-scale data exfiltration attempts to external destinations.**
 
    **Detection Query (KQL):**
    ```kql
    DeviceNetworkEvents
+   | where DeviceName == "nessa-windows"
    | where ActionType == "ConnectionFailed"
-   | summarize ConnectionCount = count() by DeviceName, ActionType, LocalIP
+   | summarize ConnectionCount = count() by DeviceName, ActionType, LocalIP, RemoteIP
    | order by ConnectionCount
    ```
+![Screenshot 2025-01-06 104150](https://github.com/user-attachments/assets/5ae46fee-237d-4363-8fa4-1b17cdf525d9)
 
-![Screenshot 2025-01-06 104150](https://github.com/user-attachments/assets/2eb708ed-7191-4219-b1a8-7fd416eee0c2)
-
-
-2. **⚙️ Process Analysis:**
+**⚙️ Process Analysis:**
    - **Observed Behavior:** After observing failed connection requests from a suspected host (`10.0.0.5`) in chronological order, I noticed a port scan was taking place due to the sequential order of the ports. There were several port scans being conducted.
 
    **Detection Query (KQL):**
@@ -67,7 +66,7 @@ DeviceProcessEvents
 
    
 
-3. **🌐 Network Check:**
+**🌐 Network Check:**
    - **Observed Behavior:** I pivoted to the `DeviceProcessEvents` table to see if we could see anything that was suspicious around the time the port scan started. We noticed a PowerShell script named `portscan.ps1` launched at `2025-01-06T06:37:00.774381Z`.
 
    **Detection Query (KQL):**
@@ -82,7 +81,7 @@ DeviceProcessEvents
 ```
 ![Screenshot 2025-01-13 161326](https://github.com/user-attachments/assets/ad26dcfb-2c43-4674-8a14-f926415d9ee6)
 
-5. **📝 Response:**
+**📝 Response:**
    - We observed the port scan script was launched by the SYSTEM account. This is not expected behavior and it is not something that was setup by the admins. I isolated the device and ran a malware scan. The malware scan produced no results, so out of caution, I kept the device isolated and put in a ticket to have it re-image/rebuilt. Shared findings with the manager, highlighting automated archive creation. Awaiting further instructions.
  
 
@@ -115,14 +114,14 @@ DeviceProcessEvents
 ---
 
 ## Created By:
-- **Author Name**: Trevino Parker
-- **Author Contact**: https://www.linkedin.com/in/trevinoparker/
-- **Date**: Jan 2025
+- **Author Name**: Vanessa Mancia 
+- **Author Contact**:
+- **Date**: 
 
 ## Validated By:
-- **Reviewer Name**: Josh Madakor
-- **Reviewer Contact**: https://www.linkedin.com/in/joshmadakor/
-- **Validation Date**: Jan 2025
+- **Reviewer Name**: 
+- **Reviewer Contact**: 
+- **Validation Date**: 
 
 ---
 
