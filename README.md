@@ -85,11 +85,11 @@ DeviceProcessEvents
 ![Screenshot 2025-01-13 161326](https://github.com/user-attachments/assets/026ece79-a225-486c-8894-00ce16d2b7fa)
 
 ## **📝Response**
-   - We observed the port scan script was launched by the SYSTEM account. This is not expected behavior and it is not something that was setup by the admins. I isolated the device and ran a malware scan. The malware scan produced no results, so out of caution, I kept the device isolated and put in a ticket to have it re-image/rebuilt. Shared findings with the manager, highlighting automated archive creation. Awaiting further instructions.
+
+The port scan script was launched by the SYSTEM account. This is not expected behavior and it is not something that was setup by the admins. The device was isolated and a malware scan was ran. The malware scan produced no results, however out of precaution the system stayed isolated and a ticket was put in to have it re-imaged / rebuilt. 
  
 
 ![Screenshot 2025-01-06 112548](https://github.com/user-attachments/assets/545363b9-cf69-4609-b40a-1af34c18c86e)
-
 
 ---
 
