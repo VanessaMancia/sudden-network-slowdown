@@ -38,7 +38,7 @@ DeviceProcessEvents
 
 ## 🔍 **Timeline Overview**
 
-The device `nessa-windows` is experiencing repeated connection failures to internal, external, and localhost IPs—suggesting possible network misconfiguration, blocked traffic, or abnormal behavior such as automated or malicious connection attempts. This may also indicate internal network issues or failed large-scale data exfiltration attempts to external destinations.**
+The device `nessa-windows` is experiencing repeated connection failures to internal, external, and localhost IPs—suggesting possible network misconfiguration, blocked traffic, or abnormal behavior such as automated or malicious connection attempts. This may also indicate internal network issues or failed large-scale data exfiltration attempts to external destinations.
 
    **Detection Query (KQL):**
    ```kql
